@@ -8,8 +8,14 @@ package student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import java.sql.*;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Locale;
+import javax.swing.table.DefaultTableModel;
 import main.DbHelper;
 
 /**
@@ -17,7 +23,10 @@ import main.DbHelper;
  * @author hasan
  */
 public class Issue extends javax.swing.JFrame {
-    
+
+    java.util.Date date;
+    java.sql.Date sqldate;
+
     Connection connection;
     ResultSet resultSet;
     PreparedStatement preparedStatement;
@@ -28,24 +37,23 @@ public class Issue extends javax.swing.JFrame {
     public Issue() {
         super("Issue Book");
         initComponents();
-        connection=DbHelper.ConnectDb();
+        connection = DbHelper.ConnectDb();
     }
-    
-    public void hesapla(){
+
+    public void hesapla() {
         String sql = "select count (*) as ogrenci_sayisi from issue where student_id=?";
-        
-        try{
-            preparedStatement=connection.prepareStatement(sql);
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, txtStudentId.getText());
-            resultSet=preparedStatement.executeQuery();
-            
+            resultSet = preparedStatement.executeQuery();
+
             /*if((int) resultSet != 3){
                 
             } else {
             }*/
-           
-        } catch(Exception exception){
-            
+        } catch (Exception exception) {
+
         }
     }
 
@@ -90,6 +98,7 @@ public class Issue extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -305,21 +314,26 @@ public class Issue extends javax.swing.JFrame {
 
         jLabel14.setIcon(new javax.swing.ImageIcon("C:\\Users\\hasan\\OneDrive\\Belgeler\\NetBeansProjects\\VirtualLibrarySystem\\src\\icons\\book.png")); // NOI18N
 
+        jTextField1.setText("jTextField1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(56, 56, 56))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(56, 56, 56)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -349,14 +363,20 @@ public class Issue extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnIssue)
-                            .addComponent(btnBack))
-                        .addGap(26, 26, 26))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnIssue)
+                                    .addComponent(btnBack))
+                                .addGap(26, 26, 26))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
 
         setSize(new java.awt.Dimension(852, 565));
@@ -370,108 +390,114 @@ public class Issue extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnBookSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookSearchActionPerformed
-       String sql = "select * from book where book_id=?";
-       
-       try{
-           preparedStatement = connection.prepareStatement(sql);
-           preparedStatement.setString(1, txtBookId.getText());
-           resultSet=preparedStatement.executeQuery();
-           if(resultSet.next()){
-               String name = resultSet.getString("name");
-               txtBookName.setText(name);
-               String edition = resultSet.getString("edition");
-               txtEdition.setText(edition);
-               String writer = resultSet.getString("writer");
-               txtWriter.setText(writer);
-               String price = resultSet.getString("price");
-               txtPrice.setText(price);
-               String pages = resultSet.getString("pages");
-               txtPages.setText(pages);
-               
-               resultSet.close();
-               preparedStatement.close();
-           } else {
-               JOptionPane.showMessageDialog(null, "Book Id Not Found");
-           }    
-       } catch(Exception exception){
-           
-           JOptionPane.showMessageDialog(null, exception);
-       } finally {
-           try{
-               resultSet.close();
-               preparedStatement.close();
-           } catch(Exception exception){
-               
-       }
-       }
-       
+        
+        String sql = "select * from book where book_id=?";
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, txtBookId.getText());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                txtBookName.setText(name);
+                String edition = resultSet.getString("edition");
+                txtEdition.setText(edition);
+                String writer = resultSet.getString("writer");
+                txtWriter.setText(writer);
+                String price = resultSet.getString("price");
+                txtPrice.setText(price);
+                String pages = resultSet.getString("pages");
+                txtPages.setText(pages);
+
+                resultSet.close();
+                preparedStatement.close();
+            } else {
+                JOptionPane.showMessageDialog(null, "Book Id Not Found");
+            }
+        } catch (Exception exception) {
+
+            JOptionPane.showMessageDialog(null, exception);
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+            } catch (Exception exception) {
+
+            }
+        }
+
     }//GEN-LAST:event_btnBookSearchActionPerformed
 
     private void txtStudentSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentSearchActionPerformed
-        String sql = "select * from student where student_id=?"; 
-        
-        try{
+        String sql = "select * from student where student_id=?";
+
+        try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, txtStudentId.getText());
-            resultSet=preparedStatement.executeQuery();
-            if(resultSet.next()){
-               String name = resultSet.getString("name");
-               txtStudentName.setText(name);
-               String fName = resultSet.getString("father_name");
-               txtFName.setText(fName);
-               String division = resultSet.getString("division");
-               txtDivision.setText(division);
-               String year = resultSet.getString("year");
-               txtYear.setText(year);
-               
-               
-               resultSet.close();
-               preparedStatement.close();
-                
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                txtStudentName.setText(name);
+                String fName = resultSet.getString("father_name");
+                txtFName.setText(fName);
+                String division = resultSet.getString("division");
+                txtDivision.setText(division);
+                String year = resultSet.getString("year");
+                txtYear.setText(year);
+
+                resultSet.close();
+                preparedStatement.close();
+
             } else {
-               JOptionPane.showMessageDialog(null, "Student Id Not Found");
+                JOptionPane.showMessageDialog(null, "Student Id Not Found");
             }
-            
-        } catch(Exception exception){
+
+        } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception);
         } finally {
-           try{
-               resultSet.close();
-               preparedStatement.close();
-           } catch(Exception exception){
-               
-       }
+            try {
+                resultSet.close();
+                preparedStatement.close();
+            } catch (Exception exception) {
+
+            }
         }
-        
+
     }//GEN-LAST:event_txtStudentSearchActionPerformed
 
     private void btnIssueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIssueActionPerformed
-       String sql = "insert into issue(book_id,name,edition,writer,price,pages,student_id,s_name,f_name,division,year,date_of_issue) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-      // String sql2="select count (*) as ogrenci_sayisi from issue where student_id=?";
-       try{
-           preparedStatement=connection.prepareStatement(sql);
-           preparedStatement.setString(1, txtBookId.getText());
-           preparedStatement.setString(2, txtBookName.getText());
-           preparedStatement.setString(3, txtEdition.getText());
-           preparedStatement.setString(4, txtWriter.getText());
-           preparedStatement.setString(5, txtPrice.getText());
-           preparedStatement.setString(6, txtPages.getText());
-           preparedStatement.setString(7, txtStudentId.getText());
-           preparedStatement.setString(8, txtStudentName.getText());
-           preparedStatement.setString(9, txtFName.getText());
-           preparedStatement.setString(10, txtDivision.getText());
-           preparedStatement.setString(11, txtYear.getText());
-           preparedStatement.setString(12, ((JTextField) jDateChooser1.getDateEditor().getUiComponent()).getText());
-           
-           
-           preparedStatement.execute();
-           JOptionPane.showMessageDialog(null, "Book Issued");
-           
-           
-       } catch(Exception exception){
-           JOptionPane.showMessageDialog(null, exception);
-           
-       }
+        String sql = "insert into issue(book_id,name,edition,writer,price,pages,student_id,s_name,f_name,division,year,date_of_issue) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        date = jDateChooser1.getDate();
+        sqldate = new java.sql.Date(date.getTime());
+
+        // DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM YYYY");
+        //Date date = dtf.j
+        //String date = dtf.format((JTextField) jDateChooser1.getDateEditor().getUiComponent()).getText();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, txtBookId.getText());
+            preparedStatement.setString(2, txtBookName.getText());
+            preparedStatement.setString(3, txtEdition.getText());
+            preparedStatement.setString(4, txtWriter.getText());
+            preparedStatement.setString(5, txtPrice.getText());
+            preparedStatement.setString(6, txtPages.getText());
+            preparedStatement.setString(7, txtStudentId.getText());
+            preparedStatement.setString(8, txtStudentName.getText());
+            preparedStatement.setString(9, txtFName.getText());
+            preparedStatement.setString(10, txtDivision.getText());
+            preparedStatement.setString(11, txtYear.getText());
+            preparedStatement.setDate(12, sqldate);
+            //preparedStatement.setDate(12, ((JTextField) jDateChooser1.getDateEditor().getUiComponent()).getText());
+
+            preparedStatement.execute();
+            JOptionPane.showMessageDialog(null, "Book Issued");
+
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception);
+
+        }
     }//GEN-LAST:event_btnIssueActionPerformed
 
     /**
@@ -530,6 +556,7 @@ public class Issue extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtBookId;
     private javax.swing.JTextField txtBookName;
     private javax.swing.JTextField txtDivision;

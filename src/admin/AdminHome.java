@@ -8,8 +8,6 @@ import student.StudentBook;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 /**
  *
  * @author hasan
@@ -356,16 +354,16 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnNewStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewStudentActionPerformed
-       setVisible(false);
-       Student newStudent = new Student();
-       newStudent.setVisible(true);
+        setVisible(false);
+        Student newStudent = new Student();
+        newStudent.setVisible(true);
     }//GEN-LAST:event_btnNewStudentActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       setVisible(false);
-       Purchased_books purchased = new Purchased_books();
-       purchased.setVisible(true);
-       purchased.table();
+        setVisible(false);
+        Purchased_books purchased = new Purchased_books();
+        purchased.setVisible(true);
+        purchased.table();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnDeleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteBookActionPerformed
@@ -395,7 +393,7 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListStudentsActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

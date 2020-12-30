@@ -25,7 +25,7 @@ public class StudentLogin extends javax.swing.JFrame {
     PreparedStatement preparedStatement;
     
     public StudentLogin() {
-        super("Login");
+        super("Student Login");
         initComponents();
         connection=DbHelper.ConnectDb();
     }
