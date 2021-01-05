@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,6 +25,8 @@ public class StudentBook extends javax.swing.JFrame {
     Connection connection;
     ResultSet resultSet;
     PreparedStatement preparedStatement;
+    
+    DefaultTableModel tblModel;
 
     public StudentBook() {
         super("Student Book");
@@ -43,9 +47,10 @@ public class StudentBook extends javax.swing.JFrame {
                 String writer = resultSet.getString("writer");
                 String price = resultSet.getString("price");
                 String pages = resultSet.getString("pages");
+                String publisher = resultSet.getString("publisher");
 
-                String tbData[] = {book_id, name, edition, writer, price, pages};
-                DefaultTableModel tblModel = (DefaultTableModel) table_book.getModel();
+                String tbData[] = {book_id, name, edition, writer, price, pages,publisher};
+                tblModel = (DefaultTableModel) table_book.getModel();
 
                 tblModel.addRow(tbData);
 
@@ -55,6 +60,34 @@ public class StudentBook extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, exception);
         }
 
+    }
+    
+     public void filterPublisher(String query){
+        
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(tblModel);
+        table_book.setRowSorter(tr);
+        
+        if(query != "None")
+        {
+            tr.setRowFilter(RowFilter.regexFilter(query));
+        } else 
+        {
+            table_book.setRowSorter(tr);
+        }   
+    }
+    
+    public void filterWriter(String query){
+         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(tblModel);
+        table_book.setRowSorter(tr);
+        
+        if(query != "None")
+        {
+            tr.setRowFilter(RowFilter.regexFilter(query));
+        } else 
+        {
+            table_book.setRowSorter(tr);
+        }   
+        
     }
 
     /**
@@ -72,6 +105,10 @@ public class StudentBook extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        cmbPublisher = new javax.swing.JComboBox<>();
+        cmbWriter = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
 
@@ -84,7 +121,7 @@ public class StudentBook extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Book ID", "Name", "Edition", "Writer", "Price", "Pages"
+                "Book ID", "Name", "Edition", "Writer", "Price", "Pages", "Publisher"
             }
         ));
         table_book.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,42 +140,83 @@ public class StudentBook extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 0, 102));
         jLabel1.setText("Books List");
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\hasan\\OneDrive\\Belgeler\\NetBeansProjects\\VirtualLibrarySystem\\src\\icons\\bookshelf.png")); // NOI18N
 
+        cmbPublisher.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cmbPublisher.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Altın Kitaplar", "Alfa Yayınları", "Damla Yayınevi ", "Koridor Yayınları", "Martı Yayınları", "Timaş Yayınları", "Toros Yayınları", "Yapı Kredi Yayınları", "None", " " }));
+        cmbPublisher.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbPublisherİtemStateChanged(evt);
+            }
+        });
+
+        cmbWriter.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cmbWriter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Craig Silvey", "Dostoyevski", "Edip Cansever", "John Steinbeck", "Jules Verne", "Maurice Leblanc", "Paulo Coelho", "Sarah Jio", "Yaşar Kemal", "None" }));
+        cmbWriter.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbWriterİtemStateChanged(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setText("Publisher:");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setText("Writer:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBack)))
-                .addGap(23, 23, 23))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbWriter, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addGap(29, 29, 29))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(228, 228, 228)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(35, 35, 35)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBack)
-                .addGap(31, 31, 31))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(cmbWriter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addGap(21, 21, 21))))
         );
 
-        setSize(new java.awt.Dimension(706, 473));
+        setSize(new java.awt.Dimension(765, 600));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -162,6 +240,20 @@ public class StudentBook extends javax.swing.JFrame {
         StudentHome sHome = new StudentHome();
         sHome.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void cmbPublisherİtemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPublisherİtemStateChanged
+        
+        String query = cmbPublisher.getSelectedItem().toString();
+        
+        filterPublisher(query);
+    }//GEN-LAST:event_cmbPublisherİtemStateChanged
+
+    private void cmbWriterİtemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbWriterİtemStateChanged
+        
+        String query = cmbWriter.getSelectedItem().toString();
+        
+        filterWriter(query);
+    }//GEN-LAST:event_cmbWriterİtemStateChanged
 
     /**
      * @param args the command line arguments
@@ -200,9 +292,13 @@ public class StudentBook extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JComboBox<String> cmbPublisher;
+    private javax.swing.JComboBox<String> cmbWriter;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table_book;
     // End of variables declaration//GEN-END:variables
