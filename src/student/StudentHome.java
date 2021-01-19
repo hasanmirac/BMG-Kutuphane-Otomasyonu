@@ -113,7 +113,7 @@ public class StudentHome extends javax.swing.JFrame {
         jLabel5.setText("İssue Book");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Return Book");
+        jLabel6.setText("Calculate Debt");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("About");
@@ -136,12 +136,10 @@ public class StudentHome extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(181, 181, 181)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel6))
                             .addComponent(btnReturn)
-                            .addComponent(btnAbout))
-                        .addContainerGap(90, Short.MAX_VALUE))
+                            .addComponent(btnAbout)
+                            .addComponent(jLabel6))
+                        .addContainerGap(93, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
@@ -266,7 +264,7 @@ public class StudentHome extends javax.swing.JFrame {
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         setVisible(false);
-        Return return_book = new Return();
+        CalculateDebt return_book = new CalculateDebt();
         return_book.setVisible(true);
     }//GEN-LAST:event_btnReturnActionPerformed
 

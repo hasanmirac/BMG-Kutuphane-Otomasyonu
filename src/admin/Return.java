@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package student;
+package admin;
 
+import student.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,10 +40,11 @@ public class Return extends javax.swing.JFrame {
     }
 
     public void Delete() {
-        String sql = "delete from issue where student_id=?";
+        String sql = "delete from issue where student_id=? and book_id=?";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, txtStudentId.getText());
+            preparedStatement.setString(2, txtBookId.getText());
             preparedStatement.execute();
 
         } catch (Exception exception) {
@@ -678,6 +680,7 @@ public class Return extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Return.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
