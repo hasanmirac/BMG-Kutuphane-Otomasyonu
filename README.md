@@ -1,4 +1,4 @@
-# BMG-Kutuphane-Sistemi
+# Library-Management-System
 
 Kütüphane Otomasyonu
 
